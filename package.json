@@ -1,0 +1,29 @@
+{
+  "name": "it-knowledgebase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./tailwind.css -o ./assets/style.css",
+    "production": "npx tailwindcss -i ./tailwind.css -o ./assets/style.css --minfy",
+    "watch": "npx watch \"npm run build\" templates"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dominik-Robert/it-knowledgebase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dominik-Robert/it-knowledgebase/issues"
+  },
+  "homepage": "https://github.com/Dominik-Robert/it-knowledgebase#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.3.7",
+    "cssnano": "^5.0.8",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.17",
+    "watch": "^1.0.2"
+  }
+}

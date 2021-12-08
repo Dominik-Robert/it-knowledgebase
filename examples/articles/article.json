@@ -1,0 +1,15 @@
+{
+  "title": "Ist der Titel des Artikels",
+  "subtitle": "Ist der Subtitel des Artikels und wir unter dem Titel angezeigt.",
+  "content_md": "Der Titel im Markdown-Format",
+  "content": "Der eigentliche Titel in HTML-Format",
+  "created_date": "Das Datum der Erstellung als DD-MM-YYYY Format. Es wird keine Uhrzeit mit aufgenommen",
+  "modified_date": "Das Datum als DD-MM-YYYY Format. Es wird keine Uhrzeit mit aufgenommen",
+  "tags": ["Tags um Artikel zu Taggen"],
+  "categories": ["Kategorien für spätere Menüs"],
+  "author": ["Dominik Robert"],
+  "needsTOC": false,
+  "toc": "",
+  "isInSeries": false,
+  "series": ""
+}
