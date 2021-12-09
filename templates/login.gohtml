@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <style>
+            .page-title{
+                color: white;
+               
+            }
+            .central-box{
+             text-align: center;
+             margin: 0 auto;
+             width: 30%;
+             background-color: #2d2d2a
+            }
+
+            .login-form {
+            text-align: left;
+            background-color: gray;
+            padding: 22px;
+            }
+            .login-form input{
+                width: 160px;
+                padding: 5px;
+                border-radius: 5px;
+                outline: none;
+                border-color: inherit;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+            .login-form label{
+                width: 100%;
+                text-align: left;
+                margin: 0;
+            }
+            .form-element{
+                margin: 0 auto;
+                width: fit-content;
+            }
+            body {
+             background-color: #2d2d2a;
+             color: white;
+            }
+        
+       </style>
+    </head>
+    <body>
+        <div class="central-box">
+       
+            <h1 class="page-title">Login</h1>
+            <!--https://stackoverflow.com/questions/31101729/compare-strings-in-templates-->
+            <!-- Problem bei action - exakte domain nur ein slash hatte gefehlt! -->
+            <p>Anmelden als:{{if eq .AccessLevel 0}}Normaler Leser {{else}} Administrator {{end}}</p>
+            <form class="login-form" action="/loginauth/" method="post">
+                <div class="form-element"><label> Username:  </label><br><input name="username" id="uname" type="text"/></div><br>
+                <div class="form-element"><label>Password: </label><br><input name="password" id="pword" type="password"/></div><br>
+                <div class="form-element"><input style="width: 168px;" value="Login" type="submit"/></div>
+            </form> 
+         </div>
+    </body>
+    
+</html>

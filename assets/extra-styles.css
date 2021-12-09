@@ -1,0 +1,45 @@
+h1, h2, h3, h4, h5, h6, p {
+    font-family: Inter, arial, sans-serif;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+h2 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.menu {
+    border-bottom: 1px solid gray;
+    padding-right: 5%;  
+    padding-left: 5%;  
+}
+
+.menu h2, .menu form {
+    display: inline-block;
+}
+
+.menu input {
+    margin-left: 30px;
+    height: 30px;
+    width: 400px;
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.menu h2, .menu form {
+    display: inline-block;
+}
+
+.mainbody {
+    margin-left: 5%;
+    margin-right: 5%;   
+    width: 90%;
+}
