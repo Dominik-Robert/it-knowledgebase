@@ -43,3 +43,47 @@ h3 {
     margin-right: 5%;   
     width: 90%;
 }
+.mainbody hr {
+    margin-bottom: 20px;
+}
+
+.entrysec {
+    display: flex;
+    flex-direction: row;
+} 
+.entrysec .entry {
+    margin-right: 20px;
+}
+
+.entry a{
+    display: flex;
+    flex-direction: row;
+}
+
+.entry a .imagecomp {
+    width: 20%;
+    
+}
+
+.entry a .imagecomp img{
+    border-radius: 10px;
+}
+
+
+
+.entry a .textcomp {
+    width: 80%;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+.footer {
+    margin-top: 200px;
+    padding: 20px;
+    padding-left: 5%;
+    padding-right: 5%;   
+    width: 100%;
+    background-color: #2F4986;
+    color: white;
+    height: 200px;
+}
