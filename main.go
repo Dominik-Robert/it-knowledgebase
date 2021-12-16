@@ -1,9 +1,17 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 type User struct {
@@ -19,10 +27,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	//timon := User{Username: "timonsrm", Password: "meinpasswort", AccessLevel: 1}
 	t := template.Must(template.ParseFiles("templates/login.gohtml"))
 	t.Execute(w, mert)
-}
-
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<h1> Hello World </h1>")
 }
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
@@ -50,6 +54,26 @@ func detailHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://timon:timonTKR@23.88.103.113:30001/timon"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		log.Fatal(err)
+	}
+	databases, err := client.ListDatabaseNames(ctx, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(databases)
+
 	http.HandleFunc("/", feedHandler)
 	http.HandleFunc("/login/", loginHandler)
 	http.HandleFunc("/loginauth/", authHandler)
