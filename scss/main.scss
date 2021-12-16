@@ -1,0 +1,71 @@
+@use "variables";
+@use "normalize";
+
+
+header {
+  background-color: variables.$PRIMARY;
+  color: variables.$TEXT_PRIMARY;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: variables.$TITLE;
+  height: 100px;
+
+  img {
+    display: none;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+main {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.article--main {
+  width: 45%;
+  padding: 10px;
+}
+
+
+@media (max-width: 768px) {
+  header {
+    input {
+      margin-top: 10px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .article--main {
+    width: 90%;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  header {
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    padding: 0px 10px;
+
+    div {
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+
+      img {
+        display: block;
+      }
+    }
+  
+    input {
+      flex-grow: 1.5;
+    }
+    
+  }  
+}
