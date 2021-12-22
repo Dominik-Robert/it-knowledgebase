@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// test
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/**/*")
