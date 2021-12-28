@@ -382,6 +382,7 @@ main {
     text-align: center;
     padding: 0px 10px;
   }
+
   header div {
     display: flex;
     flex-grow: 1;
@@ -390,6 +391,11 @@ main {
   header div img {
     display: block;
   }
+
+  header div img {
+    display: block;
+  }
+
   header input {
     flex-grow: 1.5;
   }
