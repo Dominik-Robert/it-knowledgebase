@@ -1,4 +1,5 @@
 {
+  "id": "MONGODB_ID",
   "title": "Ist der Titel des Artikels",
   "subtitle": "Ist der Subtitel des Artikels und wir unter dem Titel angezeigt.",
   "content_md": "Der Titel im Markdown-Format",
