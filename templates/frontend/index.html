@@ -16,6 +16,20 @@
     <input class="header--search" type="text" id="search" name="search" placeholer="Suche"></input>
   </header>
   <main>
+    {{ range .articles }}
+    <div class="article--main">
+      <a href={{ print "/detail/" .ID }}>
+        <div class="imagecomp">
+          <img src="/assets/images/coverimage.jpg" alt="Italian Trulli">
+        </div>
+        <div class="textcomp">
+          <h2>{{ .Title }} </h2>
+          <p>{{ .Subtitle }} </p>
+        </div>
+      </a>
+    </div>
+    {{ end }}
+    
     <div class="article--main">
         <a href="/detail">
           <div class="imagecomp">
@@ -46,20 +60,7 @@
         </a>
     </div>
 
-    <div class="article--main">
-        <a href="/detail">
-          <div class="imagecomp">
-            <img src="/assets/images/coverimage.jpg" alt="Italian Trulli">
-          </div>
-          <div class="textcomp">
-            <h2>Warum das Programmieren immer wichtiger wird</h2>
-            <p>Lucky for us, we have a strategic partner, Nrich, that recommended Elastic as they have substantial experience with deploying, managing, and optimizing the usage of the Elastic platform in the financial sector.
-            After getting initial support from Elastic Training, we decided it was the ideal tool to transform our business. We discovered that Elastic is extremely powerful and flexible, and simple to configure and operate.
-            Elastic addressed some of our specific IT needs which has dramatically helped us achieve our goals while enhancing the internal and external customer experience.
-            </p>
-          </div>
-        </a>
-    </div>
+    
   </main>
 </body>
 </html>

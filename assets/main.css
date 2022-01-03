@@ -353,14 +353,64 @@ header img {
   height: 25px;
 }
 
+header img {
+  display: none;
+  width: 25px;
+  height: 25px;
+}
+
 main {
   display: flex;
   flex-flow: row wrap;
 }
 
+img {
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, .header--text {
+  font-family: Inter, arial, sans-serif;
+}
+
+.header--text a {
+  text-decoration: none;
+  color: white;
+}
+
 .article--main {
   width: 45%;
-  padding: 10px;
+  padding: 20px;
+}
+
+.article--main a {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: black;
+}
+
+.article--main .imagecomp {
+  width: 20%;
+}
+
+.imagecomp img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.article--main .textcomp {
+  width: 80%;
+  padding-left: 20px;
+}
+
+.textcomp h2 {
+  margin-top: 0px;
+}
+
+.detail {
+  width: 80%;
+  margin: 0px auto 0px auto;
+  flex-direction: column !important;
 }
 
 @media (max-width: 768px) {
@@ -388,9 +438,6 @@ main {
     flex-grow: 1;
     justify-content: center;
   }
-  header div img {
-    display: block;
-  }
 
   header div img {
     display: block;
@@ -400,5 +447,3 @@ main {
     flex-grow: 1.5;
   }
 }
-
-/*# sourceMappingURL=main.css.map */
