@@ -1,6 +1,7 @@
 package models
 
 type Article struct {
+	ID           string   `json:"id" bson:"_id,omitempty"`
 	Title        string   `json:"title"`
 	Subtitle     string   `json:"subtitle"`
 	ContentMD    string   `json:"contentMD"`
