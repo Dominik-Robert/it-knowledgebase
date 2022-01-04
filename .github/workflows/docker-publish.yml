@@ -55,8 +55,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       - name: Deploy Kubernetes
         id: deploy
-        uses: docker/ghcr.io/dominik-robert/kubectl-over-env:latest
-        run: version
+        uses: docker://ghcr.io/dominik-robert/kubectl-over-env:latest
+        with:
+          args: version
         env:
           CERTIFICATE_AUTHORITY_DATA: ${{ secrets.CERTIFICATE_AUTHORITY_DATA }}
           CLIENT_CERTIFICATE_DATA: ${{ secrets.CLIENT_CERTIFICATE_DATA }}
