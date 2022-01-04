@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: it-knowledgebase
+  labels:
+    app: it-knowledgebase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: it-knowledgebase
+  template:
+    metadata:
+      labels:
+        app: it-knowledgebase
+    spec:
+      containers:
+      - name: it-knowledgebase
+        image: ghcr.io/dominik-robert/it-knowledgebase:latest
+        ports:
+        - containerPort: 8080

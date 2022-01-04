@@ -57,7 +57,7 @@ jobs:
         id: deploy
         uses: docker://ghcr.io/dominik-robert/kubectl-over-env:v1.22.2
         with:
-          args: version
+          args: apply -f Deployment.yaml
         env:
           CERTIFICATE_AUTHORITY_DATA: ${{ secrets.CERTIFICATE_AUTHORITY_DATA }}
           CLIENT_CERTIFICATE_DATA: ${{ secrets.CLIENT_CERTIFICATE_DATA }}
