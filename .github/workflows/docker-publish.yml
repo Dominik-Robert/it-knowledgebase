@@ -53,3 +53,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Deploy Kubernetes
+        id: deploy
+        uses: docker/ghcr.io/dominik-robert/kubectl-over-env:latest
+        run: version
+        env:
+          CERTIFICATE_AUTHORITY_DATA: ${{ secrets.CERTIFICATE_AUTHORITY_DATA }}
+          CLIENT_CERTIFICATE_DATA: ${{ secrets.CLIENT_CERTIFICATE_DATA }}
+          CLIENT_KEY_DATA: ${{ secrets.CLIENT_KEY_DATA }}
+          SERVER: ${{ secrets.SERVER }}
