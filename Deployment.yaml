@@ -17,5 +17,26 @@ spec:
       containers:
       - name: it-knowledgebase
         image: ghcr.io/dominik-robert/it-knowledgebase:latest
+        env: 
+          - name: MONGODB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: it-knowledgebase-secrets
+                key: MONGODB_HOST
+          - name: MONGODB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: it-knowledgebase-secrets
+                key: MONGODB_PORT
+          - name: MONGODB_USER
+            valueFrom:
+              secretKeyRef:
+                name: it-knowledgebase-secrets
+                key: MONGODB_USER
+          - name: MONGODB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: it-knowledgebase-secrets
+                key: MONGODB_PASSWORD
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
