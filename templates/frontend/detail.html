@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT-Knowledgebase</title>
     <link rel="stylesheet" href="/assets/main.css">
+    <link rel="stylesheet" href="/assets/prism.css">
   </head>
   <body>
     <header>
@@ -23,5 +24,15 @@
           {{ .articles.Content }}
       </div>
     </main>
+    <pre data-line="2" class="line-numbers" data-src="prism-toolbar.js" data-label="Hello World!">
+      <code class="language-go">
+        func main() {
+          fmt.Println("Hello World")
+        }
+      </code>
+    </pre>
+    {{ . }}
+    <script src="/assets/prism.js"></script>
+    <script>hljs.highlightAll();</script>
   </body>
 </html>

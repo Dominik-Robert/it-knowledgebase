@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -9,6 +10,8 @@ import (
 
 	"github.com/dominik-robert/it-knowledgebase/models"
 	"github.com/gin-gonic/gin"
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -63,6 +66,35 @@ func main() {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 	router.LoadHTMLGlob("templates/**/*")
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.MathJax | parser.Attributes
+	parser := parser.NewWithExtensions(extensions)
+
+	router.POST("/forms/newArticle", func(c *gin.Context) {
+		title := c.PostForm("title")
+		subtitle := c.PostForm("subtitle")
+		contentMD := c.PostForm("content")
+
+		content := string(markdown.ToHTML([]byte(contentMD), parser, nil))
+		timestamp := time.Now().Unix()
+
+		database.Collection(databaseSchemaName).InsertOne(context.TODO(), models.Article{
+			Title:        title,
+			Subtitle:     subtitle,
+			ContentMD:    contentMD,
+			Content:      template.HTML(content),
+			Author:       []string{"Dominik Robert"},
+			CreatedDate:  timestamp,
+			ModifiedDate: timestamp,
+		}, options.InsertOne())
+
+		c.Redirect(http.StatusPermanentRedirect, "/")
+	})
+
+	router.GET("/admin/:site", func(c *gin.Context) {
+		site := c.Param("site")
+		c.HTML(http.StatusOK, site+".html", gin.H{})
+
+	})
 
 	router.GET("/article/:id", func(c *gin.Context) {
 		id, _ := primitive.ObjectIDFromHex(c.Param("id"))
@@ -78,6 +110,19 @@ func main() {
 	})
 
 	router.GET("/", func(c *gin.Context) {
+		articles, err := GetArticles(bson.M{}, options.Find())
+
+		if err != nil {
+			c.HTML(http.StatusOK, "err.html", gin.H{})
+		} else {
+			c.HTML(http.StatusOK, "index.html", gin.H{
+				"articles": articles,
+				"title":    "Main Webseite",
+			})
+		}
+	})
+
+	router.POST("/", func(c *gin.Context) {
 		articles, err := GetArticles(bson.M{}, options.Find())
 
 		if err != nil {
