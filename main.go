@@ -1,17 +1,20 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/dominik-robert/it-knowledgebase/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/parser"
+	"github.com/russross/blackfriday"
+	"github.com/sourcegraph/syntaxhighlight"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -60,28 +63,57 @@ func init() {
 	database = client.Database(mongodb_database)
 }
 
+func replaceCodeParts(mdFile []byte) (string, error) {
+	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(mdFile))
+	if err != nil {
+		return "", err
+	}
+
+	// find code-parts via css selector and replace them with highlighted versions
+	doc.Find("code[class*=\"language-\"]").Each(func(i int, s *goquery.Selection) {
+		oldCode := s.Text()
+		formatted, err := syntaxhighlight.AsHTML([]byte(oldCode))
+		if err != nil {
+			log.Fatal(err)
+		}
+		s.SetHtml(string(formatted))
+	})
+
+	new, err := doc.Html()
+	if err != nil {
+		return "", err
+	}
+
+	// replace unnecessarily added html tags
+	new = strings.Replace(new, "<html><head></head><body>", "", 1)
+	new = strings.Replace(new, "</body></html>", "", 1)
+	return new, nil
+}
+
 // test
 func main() {
 	defer client.Disconnect(context.TODO())
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 	router.LoadHTMLGlob("templates/**/*")
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.MathJax | parser.Attributes
-	parser := parser.NewWithExtensions(extensions)
 
 	router.POST("/forms/newArticle", func(c *gin.Context) {
 		title := c.PostForm("title")
 		subtitle := c.PostForm("subtitle")
 		contentMD := c.PostForm("content")
+		html := blackfriday.MarkdownCommon([]byte(contentMD))
+		replaced, err := replaceCodeParts(html)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-		content := string(markdown.ToHTML([]byte(contentMD), parser, nil))
 		timestamp := time.Now().Unix()
 
 		database.Collection(databaseSchemaName).InsertOne(context.TODO(), models.Article{
 			Title:        title,
 			Subtitle:     subtitle,
 			ContentMD:    contentMD,
-			Content:      template.HTML(content),
+			Content:      template.HTML(replaced),
 			Author:       []string{"Dominik Robert"},
 			CreatedDate:  timestamp,
 			ModifiedDate: timestamp,
@@ -113,7 +145,9 @@ func main() {
 		articles, err := GetArticles(bson.M{}, options.Find())
 
 		if err != nil {
-			c.HTML(http.StatusOK, "err.html", gin.H{})
+			c.HTML(http.StatusOK, "err.html", gin.H{
+				"error": err,
+			})
 		} else {
 			c.HTML(http.StatusOK, "index.html", gin.H{
 				"articles": articles,
