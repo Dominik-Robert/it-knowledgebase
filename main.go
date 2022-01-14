@@ -37,7 +37,7 @@ func init() {
 	mongodb_database := GetEnvironment("MONGODB_PASSWORD", "itknowledgebase")
 	http_host = GetEnvironment("HTTP_HOST", "0.0.0.0")
 	http_port = GetEnvironment("HTTP_PORT", "8080")
-	databaseSchemaName = GetEnvironment("HTTP_PORT", "articles")
+	databaseSchemaName = GetEnvironment("DATABASE_SCHEMA_NAME", "articles")
 
 	var err error
 	if mongodb_user != "" {
