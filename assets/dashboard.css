@@ -344,4 +344,21 @@ header {
   justify-content: space-around;
 }
 
-/*# sourceMappingURL=dashboard.css.map */
+main {
+  display: flex;
+  flex-flow: row;
+}
+
+.main--menue {
+  background-color: blue;
+  width: 180px;
+}
+
+.content {
+  
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+}

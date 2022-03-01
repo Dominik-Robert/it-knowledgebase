@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"context"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -13,7 +12,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dominik-robert/it-knowledgebase/models"
 	"github.com/gin-gonic/gin"
-	"github.com/russross/blackfriday"
 	"github.com/sourcegraph/syntaxhighlight"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -96,37 +94,38 @@ func main() {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 	router.LoadHTMLGlob("templates/**/*")
+	/*
+		router.POST("/forms/newArticle", func(c *gin.Context) {
+			title := c.PostForm("title")
+			subtitle := c.PostForm("subtitle")
+			contentMD := c.PostForm("content")
+			html := blackfriday.MarkdownCommon([]byte(contentMD))
+			replaced, err := replaceCodeParts(html)
+			if err != nil {
+				log.Fatal(err)
+			}
 
-	router.POST("/forms/newArticle", func(c *gin.Context) {
-		title := c.PostForm("title")
-		subtitle := c.PostForm("subtitle")
-		contentMD := c.PostForm("content")
-		html := blackfriday.MarkdownCommon([]byte(contentMD))
-		replaced, err := replaceCodeParts(html)
-		if err != nil {
-			log.Fatal(err)
-		}
+			timestamp := time.Now().Unix()
 
-		timestamp := time.Now().Unix()
+			database.Collection(databaseSchemaName).InsertOne(context.TODO(), models.Article{
+				Title:        title,
+				Subtitle:     subtitle,
+				ContentMD:    contentMD,
+				Content:      template.HTML(replaced),
+				Author:       []string{"Dominik Robert"},
+				CreatedDate:  timestamp,
+				ModifiedDate: timestamp,
+			}, options.InsertOne())
 
-		database.Collection(databaseSchemaName).InsertOne(context.TODO(), models.Article{
-			Title:        title,
-			Subtitle:     subtitle,
-			ContentMD:    contentMD,
-			Content:      template.HTML(replaced),
-			Author:       []string{"Dominik Robert"},
-			CreatedDate:  timestamp,
-			ModifiedDate: timestamp,
-		}, options.InsertOne())
+			c.Redirect(http.StatusPermanentRedirect, "/")
+		})
 
-		c.Redirect(http.StatusPermanentRedirect, "/")
-	})
+		router.GET("/admin/:site", func(c *gin.Context) {
+			site := c.Param("site")
+			c.HTML(http.StatusOK, site+".html", gin.H{})
 
-	router.GET("/admin/:site", func(c *gin.Context) {
-		site := c.Param("site")
-		c.HTML(http.StatusOK, site+".html", gin.H{})
-
-	})
+		})
+	*/
 
 	router.GET("/article/:id", func(c *gin.Context) {
 		id, _ := primitive.ObjectIDFromHex(c.Param("id"))
