@@ -32,7 +32,7 @@ func init() {
 	mongodb_port := GetEnvironment("MONGODB_PORT", "27017")
 	mongodb_user := GetEnvironment("MONGODB_USER", "")
 	mongodb_password := GetEnvironment("MONGODB_PASSWORD", "")
-	mongodb_database := GetEnvironment("MONGODB_PASSWORD", "itknowledgebase")
+	mongodb_database := GetEnvironment("MONGODB_DATABASE", "itknowledgebase")
 	http_host = GetEnvironment("HTTP_HOST", "0.0.0.0")
 	http_port = GetEnvironment("HTTP_PORT", "8080")
 	databaseSchemaName = GetEnvironment("DATABASE_SCHEMA_NAME", "articles")
